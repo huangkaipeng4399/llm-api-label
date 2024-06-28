@@ -1,0 +1,16 @@
+azure:
+  api_keys:
+    xxxxx: 'False'
+  base_url: https://mtc2023.openai.azure.com/openai/deployments/GPT4-0409-PTU/chat/completions?api-version=2024-02-15-preview
+  model_name: gpt-4
+deepseek:
+  api_keys:
+    xxxxx: 'True'
+    xxxxx: 'True'
+  base_url: https://api.deepseek.com
+  model_name: deepseek-chat
+openai:
+  api_keys:
+    xxxxx: 'False'
+  base_url: ''
+  model_name: gpt-4
