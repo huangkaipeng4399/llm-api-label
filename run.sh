@@ -1,4 +1,4 @@
-cluster_label() {
+cluster_label(){
     input_file="./text.jsonl"
     output_file="./test1.jsonl"
     text_key="content"
@@ -8,6 +8,6 @@ cluster_label() {
         --input_file $input_file \
         --output_file $output_file \
         --start_idx $start_idx \
-        --sleep_time 10 \
+        --sleep_time 10
 }
 cluster_label

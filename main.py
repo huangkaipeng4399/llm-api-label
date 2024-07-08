@@ -13,7 +13,7 @@ if __name__ == '__main__':
     argparser.add_argument('--start_idx', type=int, required=True)
     argparser.add_argument('--sleep_time', type=float, required=True)
     args = argparser.parse_args()
-    """在config.json中添加你要使用的apikey。
+    """在config.yaml中添加你要使用的apikey。
 
     reference link:
         https://ones.ainewera.com/wiki/#/team/JNwe8qUX/share/8Ucs4Ax7/page/4JBtq1bW

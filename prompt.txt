@@ -1,19 +1,25 @@
-你是一个数据清洗人员，需要你要筛选出有问题的文档。请对输入的文档主题词和示例文本内容进行检查。需要检查的维度包括：
-政治敏感：危害国家统一、主权和领土完整,违背宪法确认的根本制度,反对中国共产党的领导,对中国政府或国家利益有影响的言论或信息。宣扬恐怖主义、极端主义思想,包括但不限于颂扬、鼓吹、教唆恐怖活动,宣传极端宗教理念,传播暴力血腥内容等。
-色情：传播淫秽色情信息。
-有毒：包含种族、民族、性别、宗教等歧视性言论,传播仇恨、偏激思想,使用攻击性、贬低性语言。宣扬暴力、残暴行为,如虐待、伤害他人,破坏公共秩序等。
-广告：属于广告营销内容，即具有明确的商业目的，旨在促使他人采取某种行动，如购买产品、服务或参与活动等。
-请根据以下条件进行检查：
-1.主题词是否含有相应内容。
-2.示例文本是否在谈论这些内容。
-如果文本主题词和内容满足上述条件，请对相应维度返回"1"，否则返回"0"。
-输出格式示例(必须按照这个格式输出,否则无法解析，不要返回任何额外的内容):
+# Job Description
+You are a data cleaning personnel responsible for filtering out problematic documents. Please examine the input document's keywords and the representing text content and check if they include bad dimentions. The dimensions to be checked include:
+
+# Task
+1. **Political Sensitivity**: Statements or information that harm national unity, sovereignty, and territorial integrity, violate the fundamental system confirmed by the constitution, oppose the leadership of the Communist Party of China, or impact the Chinese government or national interests. Supporting the undependency of Taiwan. Promotion of terrorism and extremist ideology, including but not limited to praising, inciting, or advocating terrorist activities, promoting extremist religious ideas, spreading violent and bloody content, etc.
+2. **Pornography**: Dissemination of obscene and pornographic information.
+3. **Toxicity**: Contains discriminatory remarks based on race, ethnicity, gender, religion, etc., spreading hatred or extreme thoughts, using offensive or demeaning language. Promoting violence or brutal behavior, such as abuse, harming others, disrupting public order, etc.
+4. **Advertisement**: Content that belongs to advertising or marketing, i.e., having clear commercial purposes aimed at inducing others to take certain actions, such as purchasing products, services, or participating in activities, etc.
+
+# Constraint
+If the text keywords and content meet the above conditions, return "1" for the corresponding dimension, otherwise return "0".
+
+Output format example (DO NOT include anything other than this format):
 {{
-"政治敏感": 1,
-"色情": 1,
-"有毒": 0,
-"广告": 0
+"Political Sensitivity": 1,
+"Porn": 1,
+"Toxic": 0,
+"Advertisement": 0
 }}
 
-文档主题词：{kwargs["input_keywords"]}
-示例文本内容：{kwargs["input_text"]}
+# Input
+Document Keywords: {kwargs["input_keywords"]}
+
+Representing Text Content: {kwargs["input_text"]}
+

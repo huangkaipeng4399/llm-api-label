@@ -8,7 +8,8 @@ import logging
 
 from openai import OpenAI
 
-from gpt4access import query_gpt4
+from qwen2_access import QWen2
+from gpt4_access import query_gpt4
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -21,6 +22,15 @@ def gpt_api_func(model_name='gpt-4', **kwargs):
     text = eval(f'f"""{prompt}"""')
     if "client_name" in kwargs.keys() and kwargs["client_name"] == 'azure':
         resp_text = query_gpt4(kwargs["api_key"], kwargs["base_url"], text)
+    elif "client_name" in kwargs.keys() and kwargs["client_name"] == 'qwen2':
+        model = QWen2("101.230.144.204:17906")
+        dialog=[
+            {
+                "role": "user",
+                "content": text
+            },
+        ]
+        resp_text = model.chat(dialog)
     else:
         messages = [
             {
@@ -78,11 +88,7 @@ def relabel_text(input_file,
             """
             #begin
             input_keywords = ",".join(line_dict["Keywords"])
-            texts = []
-            for i in range(min(len(line_dict["documents"]), 5)):
-                #限定输入文本长度
-                texts.append(line_dict["documents"][i][:500])
-            input_text = "\n".join(texts)
+            input_text = "\n".join(line_dict["contents"])[:2000]
             #end
 
             for _ in range(5):
@@ -92,7 +98,8 @@ def relabel_text(input_file,
                                                 input_keywords=input_keywords,
                                                 input_text=input_text,
                                                 **kwargs)
-                    gpt_response = parse_response(raw_response)
+                    gpt_response = parse_response(raw_response,
+                                                  r'{\s{0,5}"Political Sensitivity":\s{0,5}\d+,\s{0,5}"Porn":\s{0,5}\d+,\s{0,5}"Toxic":\s{0,5}\d+,\s{0,5}"Advertisement":\s{0,5}\d+\s{0,5}}')
                     break
                 except Exception as e:
                     logging.error(e)
@@ -137,7 +144,7 @@ def run_label(input_file_path, output_file, start_idx, sleep_time, config):
                         continue
                     if client_name == "openai":
                         gpt_client = OpenAI(api_key=apikey)
-                    elif config[client_name] != "azure":
+                    elif config[client_name] != "azure" or config[client_name] != "qwen2":
                         gpt_client = OpenAI(
                             api_key=apikey,
                             base_url=config[client_name]["base_url"],
@@ -146,6 +153,9 @@ def run_label(input_file_path, output_file, start_idx, sleep_time, config):
                     if client_name == "azure":
                         kwargs["base_url"] = config[client_name]["base_url"]
                         kwargs["client_name"] = "azure"
+                        kwargs["api_key"] = apikey
+                    elif client_name == "qwen2":
+                        kwargs["client_name"] = "qwen2"
                         kwargs["api_key"] = apikey
                     else:
                         kwargs["gpt_client"] = gpt_client
@@ -164,8 +174,8 @@ def run_label(input_file_path, output_file, start_idx, sleep_time, config):
                             cnt -= 1
                         config[client_name]["api_keys"][apikey] = "False"
                         continue
-            if cnt == -1:
-                break
+                if cnt == -1:
+                    break
         if file_idx != len(file_list) - 1:
             cnt = 0
     if cnt == -1:

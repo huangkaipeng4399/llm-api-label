@@ -1,11 +1,16 @@
 azure:
   api_keys:
-    xxxxx: 'True'
+    1b31a3085ad744d0bfb5fe0c0407edb6: 'False'
   base_url: https://mtc2023.openai.azure.com/openai/deployments/GPT4-0409-PTU/chat/completions?api-version=2024-02-15-preview
   model_name: gpt-4
+qwen2:
+  api_keys:
+    101.230.144.204:17906: 'True'
+  base_url: ''
+  model_name: qwen2
 deepseek:
   api_keys:
-    xxxxx: 'True'
+    sk-42f3c6316bab406bb62f91d94e9db406: 'True'
     xxxxx: 'True'
   base_url: https://api.deepseek.com
   model_name: deepseek-chat
