@@ -101,6 +101,6 @@ if __name__ == "__main__":
         },        
     ]
     
-    model = QWen2("101.230.144.204:17906")
+    model = QWen2("101.230.144.204:17900")
     response = model.chat(messages=dialog)
     print(response)
